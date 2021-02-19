@@ -1,43 +1,44 @@
-import { FETCH_IMAGE_START, FETCH_IMAGE_SUCCESS, FETCH_IMAGE_FAIL, ON_INPUT_CHANGE } from '../actions/index';
+import {FETCH_IMAGE_FAIL, FETCH_IMAGE_START, FETCH_IMAGE_SUCCESS, ON_INPUT_CHANGE} from '../actions/index';
 
 export const initialState = {
     dogImages: [],
     dogBreed: '',
-    textInput: '',
-    error: '',
     isFetching: false,
+    error: '',
+    userInput: '',
 }
 
-export const reducer = (state = initialState, action ) => {
+export const reducer = (state=initialState, action) => {
     switch(action.type){
-        case(FETCH_IMAGE_START):
+        case(FETCH_IMAGE_START): 
         return({
             ...state, 
             isFetching: true, 
             error: '',
-            dogBreed:''
+            dogBreed: '',
         })
         case(FETCH_IMAGE_SUCCESS):
-        return({
-            ...state, 
-            isFetching: false,
-            dogImages: action.payload.images,
-            dogBreed: action.payload.input,
-            error: '', 
-            textInput: '' 
-        })
+            return({
+                ...state, 
+                isFetching: false, 
+                dogBreed: action.payload.input,
+                error: '',
+                dogImages: action.payload.images,
+                userInput: '',
+            })
         case(FETCH_IMAGE_FAIL):
-        return({
-            ...state, 
-            isFetching: false, 
-            error: action.payload
-        })
+            return({
+                ...state, 
+                isFetching: false,
+                error: action.payload
+            })
         case(ON_INPUT_CHANGE):
             return({
                 ...state, 
-                userInput: action.payload
+                userInput: action.payload, 
             })
         default:
-            return state
+            return state;
     }
 }
+

@@ -1,39 +1,42 @@
+
 import React from 'react';
-import DogForm from './components/DogForm';
 import { connect } from 'react-redux';
-import { getBreed, inputChange } from './components/actions/index';
+import { getBreed, onInputChange } from './components/actions/index';
+import DogImages from './components/DogImages';
 
+function App({getBreed, onInputChange, userInput}) {
 
-const App = ({getBreed, inputChange, textInput}) => {
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        getBreed(textInput);
-    }
-
-    return(
-        <div>
-            <h1>What's Your Favorite Dog??</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Dog Breed:
-                    <input onChange={inputChange} value={textInput}/>
-                </label>
-                <button>Find</button>
-            </form>
-            <DogForm />
-        </div>
-    )
+const handleSubmit = (e)=> {
+  e.preventDefault();
+  getBreed(userInput);
 }
 
-const mapStateToProps = (state) => {
-    return{
-        error: state.error, 
-        isFetching: state.isFetching, 
-        dogBreed: state.dogBreed, 
-        dogImages: state.dogImages, 
-        textInput: state.textInput,
-    }
+  return (
+    <React.Fragment>
+    <div className="App">
+      <h1>Favorite Dog</h1>
+      <div className="todoForm">
+        <form onSubmit={handleSubmit}>
+          <label>
+            Dog:
+            <input onChange={onInputChange} value={userInput}/>
+          </label>
+          <button>Find</button>
+        </form>
+      </div>
+    </div>
+    <DogImages />
+    </React.Fragment>
+  );
 }
 
-export default connect(mapStateToProps, { getBreed, inputChange })(App);
+const mapStateToProps = state => {
+  return {
+    error: state.error,
+    isFetching: state.isFetching,
+    dogBreed: state.dogBreed,
+    dogImages: state.dogImages,
+    userInput: state.userInput,
+  }
+}
+export default connect(mapStateToProps, {getBreed, onInputChange})(App);
